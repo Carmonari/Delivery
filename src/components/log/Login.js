@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, Image, Dimensions, ImageBackground} from 'react-native';
 import PropTypes from 'prop-types';
-import {Button} from 'react-native-paper';
-import {Link} from 'react-router-native';
+import {Link, Redirect} from 'react-router-native';
+import {connect} from 'react-redux';
+
+import {loginUser} from '../../actions/authActions';
 
 import InputText from '../common/InputText';
 import Boton from '../common/Boton';
@@ -12,15 +14,30 @@ const Login = props => {
   const [data, setData] = useState({
     email: '',
     password: '',
-    errors: {},
   });
 
-  const {email, password, errors} = data;
+  const {email, password} = data;
+
+  useEffect(() => {
+    props.errors;
+  }, [props.errors]);
+
+  if (props.isAuthenticated) {
+    return <Redirect to="/home" />;
+  }
 
   const onChange = (name, value) => {
     setData({
       [name]: value,
     });
+  };
+
+  const handleLogin = event => {
+    const user = {
+      email,
+      password,
+    };
+    props.loginUser(user);
   };
 
   const dimensions = Dimensions.get('window');
@@ -41,20 +58,22 @@ const Login = props => {
         <View style={styles.form}>
           <InputText
             name="email"
-            label="Email"
+            label={props.errors ? props.errors.email : 'Email'}
             value={email}
             onChange={onChange}
             placeholder="Email"
+            error={props.errors.email && true}
           />
           <InputText
             name="password"
-            label="Password"
+            label={props.errors ? props.errors.password : 'Password'}
             value={password}
             onChange={onChange}
             placeholder="Password"
             password={true}
+            error={props.errors.password && true}
           />
-          <Boton mode="contained" name="Login" />
+          <Boton mode="contained" onClick={handleLogin} name="Login" />
         </View>
         <View style={styles.forgot}>
           <Link to="/forgot">
@@ -66,8 +85,16 @@ const Login = props => {
   );
 };
 
-// Login.propTypes = {
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+};
 
-// }
+const mapStateToProps = state => ({
+  auth: state.auth,
+  errors: state.errors,
+});
 
-export default Login;
+// eslint-disable-next-line prettier/prettier
+export default connect(mapStateToProps, {loginUser})(Login);

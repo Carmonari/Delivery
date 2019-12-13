@@ -5,7 +5,11 @@ import rootReducer from './src/reducers';
 
 const initialState = {};
 const middleware = [thunk];
-const composeEnhancers = composeWithDevTools({realtime: true, port: 8000});
+const composeEnhancers = composeWithDevTools({
+  realtime: true,
+  host: 'localhost',
+  port: 8000,
+});
 
 const store = createStore(
   rootReducer,

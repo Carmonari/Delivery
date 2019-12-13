@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import store from './store';
 
 import Login from './src/components/log/Login';
+import ForgotPass from './src/components/log/ForgotPass';
 
 const theme = {
   ...DefaultTheme,
@@ -24,6 +25,7 @@ const App = () => {
         <Router>
           <Switch>
             <Route exact path="/" component={Login} />
+            <Route exact path="/forgot" component={ForgotPass} />
           </Switch>
         </Router>
       </PaperProvider>
