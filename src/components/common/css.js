@@ -22,10 +22,9 @@ const styles = StyleSheet.create({
     margin: 10,
     flexDirection: 'row',
   },
-  textNombre: {
-    alignSelf: 'center',
+  textNombreEmail: {
+    marginTop: 20,
     marginLeft: 10,
-    color: '#FFF',
   },
 
   // Colores
@@ -36,6 +35,9 @@ const styles = StyleSheet.create({
   //Flex
   flex1: {
     flex: 1,
+  },
+  flex2: {
+    flex: 2,
   },
 
   //Magenes
@@ -61,15 +63,35 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 
+  //Radius
+  borderR15: {
+    borderRadius: 15,
+  },
+
   //Aligns
   alginCenter: {
     alignItems: 'center',
+  },
+
+  //Fonts
+  fontS12: {
+    fontSize: 12,
   },
 
   //Button
   fijo: {
     position: 'relative',
     bottom: 20,
+  },
+
+  //Home
+  home: {
+    margin: 15,
+    flexDirection: 'row',
+  },
+  tituloH: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
 

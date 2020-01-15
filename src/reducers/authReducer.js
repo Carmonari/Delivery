@@ -1,5 +1,5 @@
 import isEmpty from '../validation/is-empty';
-import {SET_CURRENT_USER} from '../actions/types';
+import {SET_CURRENT_USER, FORGOT_USER} from '../actions/types';
 
 const initialState = {
   isAuthenticated: false,
@@ -13,6 +13,10 @@ export default (state = initialState, action) => {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
         user: action.payload,
+      };
+    case FORGOT_USER:
+      return {
+        ...state,
       };
     default:
       return state;

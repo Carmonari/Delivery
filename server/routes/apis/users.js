@@ -14,6 +14,47 @@ const validateLoginInput = require('../../validation/login');
 //Load user model
 const UserDelivery = require('../../models/UserDelivery');
 
+/*Avatar*/
+var fs = require('fs');
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './uploads'); // destination folder
+  },
+  filename: function(req, file, cb) {
+    let fileObj = {
+      'image/png': '.png',
+      'image/jpeg': '.jpeg',
+      'image/jpg': '.jpg',
+    };
+    let img = req.body.id + req.body.name;
+    cb(null, img);
+  },
+});
+
+var upload = multer({storage: storage});
+
+//other imports and code will go here
+router.post('/upload', upload.single('fileData'), async (req, res) => {
+  try {
+    let fileObj = {
+      'image/png': '.png',
+      'image/jpeg': '.jpeg',
+      'image/jpg': '.jpg',
+    };
+    let img = req.body.id + req.body.name;
+    let avatar = await UserDelivery.findOneAndUpdate(
+      {_id: req.body.id},
+      {$set: {avatar: img}},
+    );
+    res.json(avatar);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Err');
+  }
+});
+
 // @route  POST api/users/login
 // @desc   Login User / Returning jwt
 // @access Public
@@ -111,7 +152,7 @@ router.post('/forgot', async (req, res) => {
     res.json(changePass);
   } catch (err) {
     console.error(err);
-    res.status(500).send('Err in the server');
+    res.status(500).send('Err in the server ' + err);
   }
 });
 
@@ -131,6 +172,39 @@ router.get(
         'cel',
         'avatar',
       ]);
+      res.json(perfil);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Err in the server');
+    }
+  },
+);
+
+// @route   PUT api/users/profile/:id
+// @desc    Profile
+// @access  Private
+router.patch(
+  '/profile/:id',
+  passport.authenticate('jwt', {session: false}),
+  async (req, res) => {
+    try {
+      let checkEmail = await UserDelivery.findOne({email: req.body.email});
+      if (checkEmail) {
+        if (checkEmail._id != req.params.id) {
+          return res.status(400).json({email: 'Email already exists'});
+        }
+      }
+      let fields = {
+        name: req.body.name,
+        email: req.body.email,
+        aPaterno: req.body.aPaterno,
+        aMaterno: req.body.aMaterno,
+        cel: req.body.cel,
+      };
+      let perfil = await UserDelivery.findOneAndUpdate(
+        {_id: req.params.id},
+        fields,
+      );
       res.json(perfil);
     } catch (err) {
       console.error(err);

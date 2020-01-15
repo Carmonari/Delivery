@@ -16,18 +16,19 @@ const Login = props => {
     password: '',
   });
 
-  const {email, password} = data;
+  let {email, password} = data;
 
   useEffect(() => {
     props.errors;
   }, [props.errors]);
 
-  if (props.isAuthenticated) {
+  if (props.auth.isAuthenticated) {
     return <Redirect to="/home" />;
   }
 
   const onChange = (name, value) => {
     setData({
+      ...data,
       [name]: value,
     });
   };

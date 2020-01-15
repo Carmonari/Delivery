@@ -8,7 +8,7 @@ import {GET_ERRORS, SET_CURRENT_USER, CLEAR_ERRORS, FORGOT_USER} from './types';
 export const loginUser = userData => async dispatch => {
   try {
     let res = await axios.post(
-      'http://10.0.2.2:5000/api/users/login',
+      'http://10.0.2.2:4000/api/users/login',
       userData,
     );
     //Save to localstorage
@@ -51,7 +51,7 @@ export const logoutUser = () => async dispatch => {
 export const forgotPass = (forgot, history) => async dispatch => {
   try {
     dispatch(clearErrors());
-    let res = await axios.post('http://10.0.2.2:5000/api/users/forgot', forgot);
+    let res = await axios.post('http://10.0.2.2:4000/api/users/forgot', forgot);
     dispatch({
       type: FORGOT_USER,
       payload: res.data,

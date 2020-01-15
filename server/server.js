@@ -36,8 +36,11 @@ app.use(passport.initialize());
 //Passport config
 require('./config/passport')(passport);
 
+//static middleware
+app.use(express.static('uploads'));
+
 app.use('/api/users', users);
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 
 app.listen(port, () => console.log(`Server running port ${port}`));

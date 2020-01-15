@@ -24,6 +24,7 @@ const ForgotPass = props => {
     const forget = {
       email,
     };
+    console.warn(forget.email);
     props.forgotPass(forget, props.history);
   };
 
