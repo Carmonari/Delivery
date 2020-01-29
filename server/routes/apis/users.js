@@ -180,7 +180,7 @@ router.get(
   },
 );
 
-// @route   PUT api/users/profile/:id
+// @route   Patch api/users/profile/:id
 // @desc    Profile
 // @access  Private
 router.patch(
@@ -209,6 +209,29 @@ router.patch(
     } catch (err) {
       console.error(err);
       res.status(500).send('Err in the server');
+    }
+  },
+);
+
+// @route   Patch api/users/profile/password/:id
+// @desc    user password
+// @access  Private
+router.patch(
+  '/profile/password/:id',
+  passport.authenticate('jwt', {session: false}),
+  async (req, res) => {
+    try {
+      let pass = await UserDelivery.findById(req.params.id);
+
+      let salt = await bcrypt.genSalt(10);
+      let hash = await bcrypt.hash(req.body.password, salt);
+      pass.password = hash;
+
+      let newPass = await pass.save();
+      res.json(newPass);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Server error');
     }
   },
 );

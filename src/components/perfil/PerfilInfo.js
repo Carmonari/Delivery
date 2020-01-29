@@ -46,6 +46,11 @@ const PerfilInfo = props => {
                   onPress={() => props.history.push('/perfil')}
                 />
                 <List.Item
+                  title="Cambiar password"
+                  left={() => <List.Icon icon="key-change" />}
+                  onPress={() => props.history.push('/password')}
+                />
+                <List.Item
                   title="Mis entregas"
                   left={() => <List.Icon icon="truck-delivery" />}
                   onPress={() => props.history.push('/perfil')}

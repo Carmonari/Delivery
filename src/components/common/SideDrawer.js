@@ -29,10 +29,9 @@ const SideDrawer = props => {
 
   return (
     <SideMenu
-      menu={
-        <ControlPanel open={open} history={props.history} {...props.user} />
-      }
-      isOpen={open}>
+      menu={<ControlPanel history={props.history} {...props.user} />}
+      isOpen={open}
+      onChange={res => setOpen(res)}>
       <View style={styles.fondoGris}>
         <Header menu={props.menu} abrir={funcion} />
         {props.children}

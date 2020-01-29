@@ -15,6 +15,7 @@ import Home from './src/components/home/Home';
 import Tracking from './src/components/tracking/Tracking';
 import PerfilInfo from './src/components/perfil/PerfilInfo';
 import Perfil from './src/components/perfil/Perfil';
+import Password from './src/components/perfil/Password';
 
 //Check for token
 AsyncStorage.getItem('jwtToken').then(token => {
@@ -47,6 +48,7 @@ const App = props => {
             <PrivateRoute exact path="/home" component={Home} />
             <PrivateRoute exact path="/perfil-info" component={PerfilInfo} />
             <PrivateRoute exact path="/perfil" component={Perfil} />
+            <PrivateRoute exact path="/password" component={Password} />
             <PrivateRoute exact path="/tracking" component={Tracking} />
           </Switch>
         </Router>

@@ -38,3 +38,18 @@ export const editProfile = (id, eProfile, history) => async dispatch => {
     });
   }
 };
+
+export const changePass = (id, password, history) => async dispatch => {
+  try {
+    await axios.patch(
+      `http://10.0.2.2:4000/api/users/profile/password/${id}`,
+      password,
+    );
+    history.push('/perfil-info');
+  } catch (err) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: err.response.data,
+    });
+  }
+};
